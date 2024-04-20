@@ -5,14 +5,14 @@ import './navigation.styles.scss';
 
 import { signOutUser } from '../../utils/firebase.utils.js';
 import { userContext } from '../../contexts/user.context';
-import { cartIconContext } from '../../contexts/cart-icon.context';
-import CartIcon from '../../components/car-icon/cart-icon.component.js';
+import { cartContext } from '../../contexts/cart.context.js';
+import CartIcon from '../../components/cart-icon/cart-icon.component.js';
 import CrwnLogo from '../../assets/crown.svg?react';
 import CartDropdown from '../../components/cart-dropdown/cart-dropdown.component.js';
 
 const Navigation = () => {
   //cart context
-  const { isCartOpen, setisCartOpen } = useContext(cartIconContext);
+  const { isCartOpen, setisCartOpen } = useContext(cartContext);
 
   //user context
   const { currentUser } = useContext(userContext);
