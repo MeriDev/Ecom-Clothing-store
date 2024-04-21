@@ -12,7 +12,7 @@ import CartDropdown from '../../components/cart-dropdown/cart-dropdown.component
 
 const Navigation = () => {
   //cart context
-  const { isCartOpen, setisCartOpen } = useContext(cartContext);
+  const { isCartOpen } = useContext(cartContext);
 
   //user context
   const { currentUser } = useContext(userContext);
