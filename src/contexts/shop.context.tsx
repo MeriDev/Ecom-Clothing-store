@@ -1,5 +1,5 @@
 import { createContext, useState } from 'react';
-import SHOP_DATA from '../SHOP_DATA.json';
+import SHOP_DATA from '../SHOP_DATA';
 
 export const shopContext = createContext({
   products: [],
