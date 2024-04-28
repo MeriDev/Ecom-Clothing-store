@@ -10,7 +10,18 @@ import {
   onAuthStateChanged,
 } from 'firebase/auth';
 
-import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
+import {
+  getFirestore,
+  collection,
+  doc,
+  getDoc,
+  setDoc,
+  writeBatch,
+} from 'firebase/firestore';
+
+import productsData from '../SHOP_DATA';
+
+//FB Config
 
 const firebaseConfig = {
   apiKey: 'AIzaSyDdyXa0z_5xabo8gJzX76z7JXt-YnlsenY',
@@ -83,3 +94,18 @@ export const signOutUser = async () => await signOut(auth);
 
 export const onAuthStateChangedListener = callback =>
   onAuthStateChanged(auth, callback);
+
+// migrating products to firebase
+export const addCollectionsAndDocuments = async (
+  collectionsKey,
+  objectsToAdd
+) => {
+  const productDocRef = await collection(db, collectionsKey);
+  try {
+    await setDoc(productDocRef, objectsToAdd);
+  } catch (error) {
+    console.log('error creating the products ', error);
+  }
+
+  return productDocRef;
+};
