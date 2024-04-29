@@ -19,7 +19,7 @@ import {
   writeBatch,
 } from 'firebase/firestore';
 
-import productsData from '../SHOP_DATA';
+import productsData from '../contexts/products';
 
 //FB Config
 
@@ -54,6 +54,24 @@ export const signInWithGoogleRedirect = () =>
 
 export const db = getFirestore();
 
+// migrating products to firebase
+export const addCollectionsAndDocuments = async (
+  collectionsKey,
+  objectsToAdd
+) => {
+  const collectionRef = collection(db, collectionsKey);
+  const batch = writeBatch(db);
+
+  objectsToAdd.forEach(object => {
+    const docRef = doc(collectionRef, object.title.toLowerCase());
+    batch.set(docRef, object);
+  });
+
+  await batch.commit();
+  console.log('done');
+};
+
+//user data
 export const createUserDocuementFromAuth = async (userAuth, additionalInfo) => {
   const userDocRef = doc(db, 'users', userAuth.uid);
   const userSnapshot = await getDoc(userDocRef);
@@ -94,18 +112,3 @@ export const signOutUser = async () => await signOut(auth);
 
 export const onAuthStateChangedListener = callback =>
   onAuthStateChanged(auth, callback);
-
-// migrating products to firebase
-export const addCollectionsAndDocuments = async (
-  collectionsKey,
-  objectsToAdd
-) => {
-  const productDocRef = await collection(db, collectionsKey);
-  try {
-    await setDoc(productDocRef, objectsToAdd);
-  } catch (error) {
-    console.log('error creating the products ', error);
-  }
-
-  return productDocRef;
-};
