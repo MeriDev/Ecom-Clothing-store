@@ -17,9 +17,9 @@ import {
   getDoc,
   setDoc,
   writeBatch,
+  query,
+  getDocs,
 } from 'firebase/firestore';
-
-import productsData from '../contexts/products';
 
 //FB Config
 
@@ -69,6 +69,22 @@ export const addCollectionsAndDocuments = async (
 
   await batch.commit();
   console.log('done');
+};
+// getting products from firebase
+export const getCategoriesAndDocuments = async () => {
+  const collectionRef = collection(db, 'categories');
+
+  const q = query(collectionRef);
+
+  const querySnapShot = await getDocs(q);
+
+  const productMap = querySnapShot.docs.reduce((acc, docSnapShot) => {
+    const { title, items } = docSnapShot.data();
+    acc[title.toLowerCase()] = items;
+    return acc;
+  }, {});
+
+  return productMap;
 };
 
 //user data
