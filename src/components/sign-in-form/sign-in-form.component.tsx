@@ -8,7 +8,9 @@ import {
 
 import './sign-in-form.styles.scss';
 
-import Button from '../../components/button/button.component.js';
+import Button, {
+  BUTTON_TYPES_CLASSES,
+} from '../../components/button/button.component.js';
 
 import FormInput from '../../components/form-input/form-input.component.js';
 
@@ -83,7 +85,11 @@ const SignInForm = () => {
         />
         <div className="buttons-container">
           <Button type="submit">Sign in</Button>
-          <Button type="button" buttonType="google" onClick={signInWithGoogle}>
+          <Button
+            type="button"
+            buttonType={BUTTON_TYPES_CLASSES.google}
+            onClick={signInWithGoogle}
+          >
             Google sign in
           </Button>
         </div>
